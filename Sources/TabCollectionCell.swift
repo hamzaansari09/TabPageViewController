@@ -13,6 +13,7 @@ class TabCollectionCell: UICollectionViewCell {
     var tabItemButtonPressedBlock: ( () -> Void )?
     var option: TabPageOption = TabPageOption() {
         didSet {
+            itemLabel.font = option.font
             currentBarViewHeightConstraint.constant = option.currentBarHeight
         }
     }
@@ -85,12 +86,10 @@ extension TabCollectionCell {
 
     func highlightTitle() {
         itemLabel.textColor = option.currentColor
-        itemLabel.font = UIFont.boldSystemFont(ofSize: option.fontSize)
     }
 
     func unHighlightTitle() {
         itemLabel.textColor = option.defaultColor
-        itemLabel.font = UIFont.systemFont(ofSize: option.fontSize)
     }
 }
 

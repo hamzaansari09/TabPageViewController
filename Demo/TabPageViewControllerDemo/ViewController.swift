@@ -28,8 +28,8 @@ class ViewController: UIViewController {
         let vc2 = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ListViewController")
         tc.tabItems = [(vc1, "First"), (vc2, "Second")]
         var option = TabPageOption()
+        option.font = UIFont.boldSystemFont(ofSize: 20)
         option.tabWidth = view.frame.width / CGFloat(tc.tabItems.count)
-        option.hidesTopViewOnSwipeType = .all
         tc.option = option
         navigationController?.pushViewController(tc, animated: true)
     }

@@ -47,7 +47,6 @@ class ViewController: UIViewController {
         let vc5 = UIViewController()
         vc5.view.backgroundColor = UIColor(red: 252/255, green: 182/255, blue: 106/255, alpha: 1.0)
         tc.tabItems = [(vc1, "Mon."), (vc2, "Tue."), (vc3, "Wed."), (vc4, "Thu."), (vc5, "Fri.")]
-        tc.isInfinity = true
         let nc = UINavigationController()
         nc.viewControllers = [tc]
         var option = TabPageOption()

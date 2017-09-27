@@ -9,7 +9,7 @@
 import UIKit
 
 open class TabPageViewController: UIPageViewController {
-    open var isInfinity: Bool = false
+
     open var option: TabPageOption = TabPageOption()
     open var tabItems: [(viewController: UIViewController, title: String)] = []
 
@@ -47,10 +47,6 @@ open class TabPageViewController: UIPageViewController {
 
         if tabView.superview == nil {
             tabView = configuredTabView()
-        }
-
-        if let currentIndex = currentIndex , isInfinity {
-            tabView.updateCurrentIndex(currentIndex, shouldScroll: true)
         }
     }
 
@@ -113,7 +109,7 @@ extension TabPageViewController {
     }
 
     fileprivate func configuredTabView() -> TabView {
-        let tabView = TabView(isInfinity: isInfinity, option: option)
+        let tabView = TabView(option: option)
         tabView.translatesAutoresizingMaskIntoConstraints = false
 
         let height = NSLayoutConstraint(item: tabView,
@@ -181,15 +177,6 @@ extension TabPageViewController: UIPageViewControllerDataSource {
         } else {
             index -= 1
         }
-
-        if isInfinity {
-            if index < 0 {
-                index = tabItems.count - 1
-            } else if index == tabItems.count {
-                index = 0
-            }
-        }
-
         if index >= 0 && index < tabItems.count {
             return tabItems[index].viewController
         }

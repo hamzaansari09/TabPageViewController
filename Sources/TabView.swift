@@ -145,7 +145,6 @@ extension TabView {
                 currentBarViewWidth = currentCell.frame.width
             }
             
-            let distance = (currentCell.frame.width / 2.0) + (nextCell.frame.width / 2.0)
             let scrollRate = contentOffsetX / frame.width
             
             if fabs(scrollRate) > 0.6 {
@@ -280,8 +279,7 @@ extension TabView: UICollectionViewDataSource {
         cell.isCurrent = fixedIndex == (currentIndex % pageTabItemsCount)
         cell.tabItemButtonPressedBlock = { [weak self, weak cell] in
             var direction: UIPageViewControllerNavigationDirection = .forward
-            if let pageTabItemsCount = self?.pageTabItemsCount, let currentIndex = self?.currentIndex {
-                
+            if let currentIndex = self?.currentIndex {
                 if indexPath.item < currentIndex {
                     direction = .reverse
                 }

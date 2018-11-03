@@ -10,7 +10,7 @@ import UIKit
 
 internal class TabView: UIView {
     
-    var pageItemPressedBlock: ((_ index: Int, _ direction: UIPageViewControllerNavigationDirection) -> Void)?
+    var pageItemPressedBlock: ((_ index: Int, _ direction: UIPageViewController.NavigationDirection) -> Void)?
     var pageTabItems: [String] = [] {
         didSet {
             pageTabItemsCount = pageTabItems.count
@@ -147,7 +147,7 @@ extension TabView {
             
             let scrollRate = contentOffsetX / frame.width
             
-            if fabs(scrollRate) > 0.6 {
+            if abs(scrollRate) > 0.6 {
                 nextCell.highlightTitle()
                 currentCell.unHighlightTitle()
             } else {
@@ -155,7 +155,7 @@ extension TabView {
                 currentCell.highlightTitle()
             }
             
-            let width = fabs(scrollRate) * (nextCell.frame.width - currentCell.frame.width)
+            let width = abs(scrollRate) * (nextCell.frame.width - currentCell.frame.width)
             
             if scrollRate > 0 {
                 currentBarViewLeftConstraint?.constant = currentCell.frame.minX + scrollRate * currentCell.frame.width
@@ -252,7 +252,7 @@ extension TabView {
     fileprivate func deselectVisibleCells() {
         collectionView
             .visibleCells
-            .flatMap { $0 as? TabCollectionCell }
+            .compactMap { $0 as? TabCollectionCell }
             .forEach { $0.isCurrent = false }
     }
 }
@@ -278,7 +278,7 @@ extension TabView: UICollectionViewDataSource {
         cell.option = option
         cell.isCurrent = fixedIndex == (currentIndex % pageTabItemsCount)
         cell.tabItemButtonPressedBlock = { [weak self, weak cell] in
-            var direction: UIPageViewControllerNavigationDirection = .forward
+            var direction: UIPageViewController.NavigationDirection = .forward
             if let currentIndex = self?.currentIndex {
                 if indexPath.item < currentIndex {
                     direction = .reverse

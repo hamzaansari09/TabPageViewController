@@ -30,7 +30,7 @@ open class TabPageViewController: UIPageViewController {
     lazy fileprivate var tabView: TabView = self.configuredTabView()
     fileprivate var tabBarTopConstraint: NSLayoutConstraint?
 
-    open static func create() -> TabPageViewController {
+    public static func create() -> TabPageViewController {
         let sb = UIStoryboard(name: "TabPageViewController", bundle: Bundle(for: TabPageViewController.self))
         return sb.instantiateInitialViewController() as! TabPageViewController
     }
@@ -62,7 +62,7 @@ open class TabPageViewController: UIPageViewController {
 
 public extension TabPageViewController {
 
-    public func displayControllerWithIndex(_ index: Int, direction: UIPageViewControllerNavigationDirection, animated: Bool) {
+    public func displayControllerWithIndex(_ index: Int, direction: UIPageViewController.NavigationDirection, animated: Bool) {
 
         beforeIndex = index
         shouldScrollCurrentBar = false
@@ -102,7 +102,7 @@ extension TabPageViewController {
 
     fileprivate func setupScrollView() {
         // Disable PageViewController's ScrollView bounce
-        let scrollView = view.subviews.flatMap { $0 as? UIScrollView }.first
+        let scrollView = view.subviews.compactMap { $0 as? UIScrollView }.first
         scrollView?.scrollsToTop = false
         scrollView?.delegate = self
         scrollView?.backgroundColor = option.pageBackgoundColor
@@ -151,7 +151,7 @@ extension TabPageViewController {
         tabView.pageTabItems = tabItems.map({ $0.title})
         tabView.updateCurrentIndex(beforeIndex, shouldScroll: true)
 
-        tabView.pageItemPressedBlock = { [weak self] (index: Int, direction: UIPageViewControllerNavigationDirection) in
+        tabView.pageItemPressedBlock = { [weak self] (index: Int, direction: UIPageViewController.NavigationDirection) in
             self?.displayControllerWithIndex(index, direction: direction, animated: true)
         }
 
